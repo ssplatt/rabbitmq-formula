@@ -1,0 +1,32 @@
+# vim: ft=yaml
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: salt_solo
+  is_file_root: true
+  salt_copy_filter:
+    - .kitchen
+    - .git
+  state_top:
+    base:
+      "*":
+        - test.mockup
+        - rabbitmq
+
+platforms:
+  - name: bento/debian-8.7
+
+suites:
+  - name: default
+
+  - name: custom
+    provisioner:
+      pillars-from-files:
+        rabbitmq.sls: pillar-custom.sls
+      pillars:
+        top.sls:
+          base:
+            "*":
+              - rabbitmq

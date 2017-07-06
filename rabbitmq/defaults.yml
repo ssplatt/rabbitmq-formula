@@ -1,0 +1,10 @@
+# vim: ft=yaml
+# Defaults for rabbitmq
+
+rabbitmq:
+  enabled: false
+  pkg: rabbitmq-server
+  service:
+    state: dead
+    enable: false
+    name: rabbitmq-server
