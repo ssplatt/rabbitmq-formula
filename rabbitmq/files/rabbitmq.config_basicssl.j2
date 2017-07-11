@@ -1,0 +1,105 @@
+[
+ {rabbit,
+  [
+   {%   if config.rabbit.tcp_listeners is iterable %}
+   {tcp_listeners, [
+   {%     for address, port in config.rabbit.tcp_listeners.iteritems() %}
+       {% if loop.last %}
+       {"{{ address }}", {{ port }}}
+       {% else %}
+       {"{{ address }}", {{ port }}},
+       {% endif %}
+   {%     endfor %}
+      ]},
+   {%  else %}
+   {tcp_listeners, [{{ config.rabbit.tcp_listeners }}]},
+   {%  endif %}
+   
+   {%   if config.rabbit.ssl_listeners is iterable %}
+   {ssl_listeners, [
+   {%     for address, port in config.rabbit.ssl_listeners.iteritems() %}
+       {% if loop.last -%}
+       {"{{ address }}", {{ port }}}
+       {% else %}
+       {"{{ address }}", {{ port }}},
+       {%- endif %}
+   {%     endfor %}
+      ]},
+   {%  else %}
+   {ssl_listeners, [{{ config.rabbit.ssl_listeners }}]},
+   {%  endif %}
+   
+   {% if config.rabbit.num_tcp_acceptors is defined -%}
+   {num_tcp_acceptors, {{ config.rabbit.num_tcp_acceptors }}},
+   {%- endif %}
+   {% if config.rabbit.num_ssl_acceptors is defined -%}
+   {num_ssl_acceptors, {{ config.rabbit.num_ssl_acceptors }}},
+   {%- endif %}
+   
+   {% if config.rabbit.handshake_timeout is defined -%}
+   {handshake_timeout, {{ config.rabbit.handshake_timeout }}},
+   {%- endif %}
+   
+   {% if config.rabbit.log_levels is defined -%}
+   {%   if config.rabbit.log_levels is iterable %}
+   {log_levels, [
+   {%     for type, level in config.rabbit.log_levels.iteritems() %}
+       {% if loop.last %}
+       { {{ type }}, {{ level }} }
+       {% else %}
+       { {{ type }}, {{ level }} },
+       {% endif %}
+   {%     endfor %}
+      ]},
+   {%  endif %}
+   {%- endif %}
+   
+   {% if config.rabbit.reverse_dns_lookups is defined -%}
+   {reverse_dns_lookups, {{ config.rabbit.reverse_dns_lookups }}},
+   {%- endif %}
+   
+   {% if config.rabbit.loopback_users is defined -%}
+   {loopback_users, [
+     {% if config.rabbit.loopback_users is iterable %}
+     {%   for user in config.rabbit.loopback_users %}
+     {%     if loop.last %}
+     "{{ user }}"
+     {%     else %}
+     "{{ user }}",
+     {%     endif %}
+     {%   endfor %}
+     {% else %}
+     "{{ config.rabbit.loopback_users }}"
+     {% endif %}
+    ]},
+   {%- endif %}
+   
+   {ssl_options, [
+     {cacertfile,           "{{ config.rabbit.ssl_options.cacertfile }}"},
+     {certfile,             "{{ config.rabbit.ssl_options.certfile }}"},
+     {keyfile,              "{{ config.rabbit.ssl_options.keyfile }}"},
+     {verify,               {{ config.rabbit.ssl_options.verify }}},
+     {fail_if_no_peer_cert, {{ config.rabbit.ssl_options.fail_if_no_peer_cert }}}
+   ]},
+   
+   {auth_mechanisms, [
+     {% if config.rabbit.auth_mechanisms is iterable %}
+     {%   for mech in config.rabbit.auth_mechanisms %}
+     {%     if loop.last %}
+     '{{ mech }}'
+     {%     else %}
+     '{{ mech }}',
+     {%     endif %}
+     {%   endfor %}
+     {% else %}
+     {{ config.rabbit.auth_mechanisms }}
+     {% endif %}
+   ]},
+   
+   {% if config.rabbit.ssl_handshake_timeout is defined -%}
+   {ssl_handshake_timeout, {{ config.rabbit.ssl_handshake_timeout }}},
+   {%- endif %}
+
+   {password_hashing_module, {{ config.rabbit.password_hashing_module }}}
+  ]}
+].
