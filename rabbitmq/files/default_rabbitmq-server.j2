@@ -1,4 +1,3 @@
-{%- from "rabbitmq/map.jinja" import rabbitmq with context -%}
 # This file is sourced by /etc/init.d/rabbitmq-server. Its primary
 # reason for existing is to allow adjustment of system limits for the
 # rabbitmq-server process.
@@ -8,6 +7,6 @@
 # documentation for ulimit (in man bash) for more information.
 #
 #ulimit -n 1024
-{% if rabbitmq.ulimit is defined %}
-ulimit -S -n {{ rabbitmq.ulimit }}
-{% endif %}
+{% if default_config.ulimit is defined -%}
+ulimit -S -n {{ default_config.ulimit }}
+{%- endif %}
