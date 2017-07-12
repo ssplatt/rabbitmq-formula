@@ -16,7 +16,7 @@ provisioner:
         - rabbitmq
 
 platforms:
-  - name: bento/debian-8.7
+  - name: bento/debian-8.8
 
 suites:
   - name: default

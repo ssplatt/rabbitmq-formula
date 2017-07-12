@@ -50,8 +50,3 @@ end
 describe port(5671) do
   it { should be_listening }
 end
-
-describe process("beam") do
-  it { should be_running }
-  its(:user) { should eq "rabbitmq" }
-end
