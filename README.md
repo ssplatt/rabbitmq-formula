@@ -1,10 +1,7 @@
 # rabbitmq-formula
+[![Build Status](https://travis-ci.org/ssplatt/rabbitmq-formula.svg?branch=master)](https://travis-ci.org/ssplatt/rabbitmq-formula)
 
-Purpose of formula. Include a short description of what the formula does.
-
-
-Describe in a readable form the states this formula supports with examples how to use those states.
-
+Manage and configure Rabbitmq via Saltstack Salt.
 
 Install and setup brew:
 ```
