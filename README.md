@@ -3,6 +3,7 @@
 
 Manage and configure Rabbitmq via Saltstack Salt.
 
+## Development
 Install and setup brew:
 ```
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
